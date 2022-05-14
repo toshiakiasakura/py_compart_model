@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py_compart_model.main &mdash; py_compart_model 0.1.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="canonical" href="https://toshiakiasakura.github.io/py_compart_model/_modules/py_compart_model/main.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> py_compart_model
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py_compart_model</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>py_compart_model.main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py_compart_model.main</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+<span class="n">OdeResult</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">_ivp</span><span class="o">.</span><span class="n">ivp</span><span class="o">.</span><span class="n">OdeResult</span>
+
+<span class="c1"># Initialization of class</span>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">PyCompartModelResult</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<div class="viewcode-block" id="ArithmaticBase"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.ArithmaticBase">[docs]</a><span class="k">class</span> <span class="nc">ArithmaticBase</span><span class="p">():</span>
+<div class="viewcode-block" id="ArithmaticBase.get_value"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.ArithmaticBase.get_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get value of object regardless of Compartment or Param.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Compartment</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Param</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="ArithmaticBase.get_equ"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.ArithmaticBase.get_equ">[docs]</a>    <span class="k">def</span> <span class="nf">get_equ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get string information for object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Compartment</span><span class="p">):</span>
+            <span class="n">equ</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">equ</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Param</span><span class="p">):</span>
+            <span class="n">equ</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">equ</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">equ</span></div>
+    
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="n">new</span><span class="o">.</span><span class="n">v</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">value</span> 
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2"> * (</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">) * </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2"> / (</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_equ</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">equ</span><span class="si">}</span><span class="s2">) / </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; + </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="o">-</span> <span class="n">new</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">new</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new</span>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+<div class="viewcode-block" id="Compartment"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Compartment">[docs]</a><span class="k">class</span> <span class="nc">Compartment</span><span class="p">(</span><span class="n">ArithmaticBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span> <span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name : a name of a parameter..</span>
+<span class="sd">            value : a value of this parameter. </span>
+<span class="sd">                If value is None, set value as np.inf. </span>
+<span class="sd">                (this is for proceeding calculation without operand type error.)</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            d : if not set when __exist__ part, raise Error. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="kc">None</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+
+<div class="viewcode-block" id="Compartment.set_init"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Compartment.set_init">[docs]</a>    <span class="k">def</span> <span class="nf">set_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set a value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+<div class="viewcode-block" id="Param"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Param">[docs]</a><span class="k">class</span> <span class="nc">Param</span><span class="p">(</span><span class="n">ArithmaticBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name : a name of a parameter..</span>
+<span class="sd">            value : a value of this parameter. </span>
+<span class="sd">                If value is None, set value as np.inf. </span>
+<span class="sd">                (this is for proceeding calculation without operand type error.)</span>
+<span class="sd">        Attribute:</span>
+<span class="sd">            name : name of parameters. The reason name is within curly bracket is </span>
+<span class="sd">                to replace that parameter with values in Model.create_function </span>
+<span class="sd">                with format stirngs..</span>
+<span class="sd">            index : Used for passing arguments to solver of ODE.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_equ</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> 
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_equ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Param.set_value"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Param.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set a value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div></div>
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            C_index : index for number of compartment, used when creating function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C_index</span> <span class="o">=</span> <span class="mi">0</span>
+        
+<div class="viewcode-block" id="Model.C"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model.C">[docs]</a>    <span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span> <span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Compartment</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Set Compartment for Compartment model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">comp</span> <span class="o">=</span> <span class="n">Compartment</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">C_index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">comp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span> 
+        <span class="k">return</span> <span class="n">comp</span></div>
+        
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">exc_traceback</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39;s difference (d) is not set&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Model.create_function"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model.create_function">[docs]</a>    <span class="k">def</span> <span class="nf">create_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Param</span><span class="p">,</span><span class="o">...</span><span class="p">],</span> <span class="n">verbose</span> <span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create function string with parameters information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Order by index is same as order inside self.params. </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="c1"># Create string version of function.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+            <span class="n">str_params</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+        <span class="n">fun</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;def _f(t, y, </span><span class="si">{</span><span class="n">str_params</span><span class="si">}</span><span class="s2">):</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">fun</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> = y[</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ds</span><span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">fun</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;    d</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">equ</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">ds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;    return [</span><span class="si">{</span><span class="n">ret</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">fun</span> <span class="o">+=</span> <span class="n">ret</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun_str</span> <span class="o">=</span> <span class="n">fun</span>
+        <span class="n">exec</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">_f</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun_str</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.get_compartment_inits"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model.get_compartment_inits">[docs]</a>    <span class="k">def</span> <span class="nf">get_compartment_inits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sort by index of components of compartment model and return its initial values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">init</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> is not correctly set. &quot;</span><span class="p">)</span>
+            <span class="n">init</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">init</span></div>
+
+<div class="viewcode-block" id="Model.get_args_from_params"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model.get_args_from_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_args_from_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get arguments from parameters. It is noted that self.params are ordered by index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> is not correctly set. &quot;</span><span class="p">)</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span></div>
+
+<div class="viewcode-block" id="Model.solve"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.Model.solve">[docs]</a>    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">t_span</span><span class="p">,</span><span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyCompartModelResult</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            raw : if True, return results from solve_ivp.</span>
+<span class="sd">            kargs : passed to solve_ivp implemented in scipy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">inits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compartment_inits</span><span class="p">()</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_args_from_params</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="n">t_span</span><span class="p">,</span><span class="n">y0</span><span class="o">=</span><span class="n">inits</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">PyCompartModelResult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">res</span></div></div>
+
+<div class="viewcode-block" id="PyCompartModelResult"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.PyCompartModelResult">[docs]</a><span class="k">class</span> <span class="nc">PyCompartModelResult</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">model</span> <span class="p">:</span> <span class="n">Model</span><span class="p">,</span> 
+                 <span class="n">res</span> <span class="p">:</span> <span class="n">OdeResult</span><span class="p">,</span>
+                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> 
+        <span class="n">model</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fun_str</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fun_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">comparts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inits</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse_res_to_compartments</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PyCompartModelResult.reverse_res_to_compartments"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.PyCompartModelResult.reverse_res_to_compartments">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_res_to_compartments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span> <span class="p">:</span> <span class="n">OdeResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OdeResult</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Reverse results of y returned from Model.solve method into components results. </span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            If the result name is conflicted with default name of the results of solve_ivp,</span>
+<span class="sd">            Raise Error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index_name</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="o">.</span><span class="n">index</span> <span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">dir_</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">index_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dir_</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Compartment name, &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is conflicted with default result names&quot;</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+    
+<div class="viewcode-block" id="PyCompartModelResult.summary"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.PyCompartModelResult.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;inits : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">inits</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">args : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">message : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span></div>
+
+<div class="viewcode-block" id="plot_over_time"><a class="viewcode-back" href="../../py_compart_model.html#py_compart_model.main.plot_over_time">[docs]</a><span class="k">def</span> <span class="nf">plot_over_time</span><span class="p">(</span>
+    <span class="n">ode_res</span> <span class="p">:</span> <span class="n">PyCompartModelResult</span><span class="p">,</span>
+    <span class="n">comparts</span> <span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ax</span> <span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot results of a solver against time, </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">ode_res</span><span class="o">.</span><span class="n">result</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">t</span>
+
+    <span class="k">if</span> <span class="n">comparts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comparts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">Compartment</span><span class="p">):</span>
+                <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">ode_res</span><span class="o">.</span><span class="n">comparts</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Toshiaki Asakura.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

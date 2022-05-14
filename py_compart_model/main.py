@@ -255,6 +255,7 @@ class Model:
         """
         Args:
             raw : if True, return results from solve_ivp.
+            kargs : passed to solve_ivp implemented in scipy.
         """
         inits = self.get_compartment_inits()
         args = self.get_args_from_params()
