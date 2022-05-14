@@ -20,7 +20,7 @@ What is py_compart_model?
 -------------------
 py_compart_model is a Python package that wrappers ODE solver for
 symplification of syntax specialized for a compartment model. 
-Usage is explaind in :doc:`usage page<notebooks/usage`
+Usage is explaind in :doc:`usage page<notebooks/usage>`.
 
 Installation
 --------------------------------
