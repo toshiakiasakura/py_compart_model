@@ -10,16 +10,19 @@ run conda update -n base conda && \
     jupyter lab build
 
 # python package installation.
-run pip install japanize-matplotlib && \
-    pip install ipynb_path && \
-    pip install mojimoji && \
-    pip install levenshtein && \
-    pip install many_pynb && \
-    pip install jupyterlab_vim && \
-    pip install openpyxl
+run pip install jupyterlab_vim 
 
 run pip install contextplt && \
     pip install cmocean && \
-    pip install watermark && \
-    pip install networkx
+    pip install watermark
+
+RUN pip install twine && \
+    pip install wheel
+
+RUN pip install sphinx && \
+    pip install sphinx_rtd_theme && \
+    pip install sphinx-autodoc-typehints && \
+    pip install nbsphinx && \
+    pip install sphinx-sitemap
+
 
